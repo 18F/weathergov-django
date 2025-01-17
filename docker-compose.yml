@@ -1,0 +1,108 @@
+name: weathergov-django
+
+services:
+  database:
+    image: mysql:8.0 # 8.0.35 in prod
+    networks:
+      - weather.gov
+    volumes:
+      - ./data/db:/data
+    environment:
+      MYSQL_DATABASE: weathergov
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+      MYSQL_ROOT_PASSWORD: drupal
+    ports:
+      - 3306:3306
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/code
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_DATABASE: weathergov
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+      MYSQL_ROOT_PASSWORD: drupal
+    networks:
+      - weather.gov
+    depends_on:
+      - database
+    links:
+      - database
+
+  api-proxy:
+    build:
+      context: ./weather.gov/tests/api
+      dockerfile: Dockerfile
+    environment:
+      WX_NOW_TIMESTAMP: ${WX_NOW_TIMESTAMP:-}
+    networks:
+      - weather.gov
+    ports:
+      - 8081:8081
+    volumes:
+      - ./weather.gov/tests/api:/app
+      - /app/node_modules
+
+
+  api-interop-layer:
+    build:
+      context: ./weather.gov/api-interop-layer
+      dockerfile: Dockerfile
+    # Use the same resource limits as deployed
+    deploy:
+      resources:
+        limits:
+          memory: 256MB
+    environment:
+      PORT: 8082
+      DB_NAME: weathergov
+      DB_USERNAME: drupal
+      DB_PASSWORD: drupal
+      DB_HOST: database
+      DB_PORT: 3306
+      API_URL: http://api-proxy:8081
+      API_INTEROP_NAME: ${API_INTEROP_NAME:-local}
+      NEWRELIC_LICENSE: ${NEWRELIC_LICENSE:-}
+    networks:
+      - weather.gov
+    links:
+      - database
+      - api-proxy
+    ports:
+      - 8082:8082
+      - 9229:9229
+    volumes:
+      - ./weather.gov/api-interop-layer:/app
+      - /app/node_modules
+
+  uswds:
+    build:
+      context: ./
+      dockerfile: Dockerfile.uswds
+    volumes:
+      - ./weather.gov/web/themes/new_weather_theme/:/app
+      - /app/node_modules
+    profiles: ["utility"]
+
+  spatial:
+    build:
+      context: ./weather.gov/spatial-data
+      dockerfile: Dockerfile.spatial
+    image: 18f-spatial-node:20
+    networks:
+      - weather.gov
+    links:
+      - database
+    environment:
+      DB_HOST: database
+    volumes:
+      - ./weather.gov/spatial-data/:/app
+      - /app/node_modules
+
+networks:
+  weather.gov:
