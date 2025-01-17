@@ -25,3 +25,6 @@ containers-up:
 
 pause:
 	sleep 15
+
+build-css: # Build CSS
+	docker compose run --rm uswds npx gulp compile
