@@ -1,4 +1,5 @@
 {% extends "weather/base.html" %}
+{% load i18n %}
 
 {% block head_js %}
     <script src="/assets/js/front.page.js"></script>
@@ -9,4 +10,12 @@
 <p>
     This is the page!
 </p>
+<div>
+    {% get_language_info for "en" as lang %}
+    Language code: {{ lang.code }}<br>
+    Name of language: {{ lang.name_local }}<br>
+    Name in English: {{ lang.name }}<br>
+    Bi-directional: {{ lang.bidi }}
+    Name in the active language: {{ lang.name_translated }}
+</div>
 {% endblock %}

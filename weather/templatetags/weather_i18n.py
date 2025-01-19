@@ -1,9 +1,9 @@
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django import template
 
 register = template.Library()
 
 def t(value):
-    return value
+    return _(value)
 
 register.filter("t", t)
