@@ -27,6 +27,7 @@ services:
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
       MYSQL_ROOT_PASSWORD: drupal
+      INTEROP_URL: "http://api-interop-layer:8082/"
     networks:
       - weather.gov
     depends_on:

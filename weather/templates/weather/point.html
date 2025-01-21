@@ -1,7 +1,18 @@
-<h1>You attempted to navigate to:</h1>
-<dl>
-    <dt>Lat:</dt>
-    <dd>{{lat}}</dd>
-    <dt>Lon:</dt>
-    <dd>{{lon}}</dd>
-</dl>
+{% extends "weather/page.html" %}
+{% block head_js %}
+    <script src="/assets/js/point.page.js"></script>
+    <script src="/assets/js/point.page.components.js"></script>
+{% endblock %}
+
+{% block page_content %}
+    <div class="layout-container grid-row height-full flex-column flex-no-wrap">
+        {% include 'weather/partials/location-search.html' with place=point.place %}
+        {% if point.alerts.items|length > 0 %}
+            <div class="bg-primary-darker padding-bottom-105">
+                <div class="grid-container margin-top-0">
+                    {% include "weather/partials/alert-summary.html" with alerts=point.alerts.items %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
