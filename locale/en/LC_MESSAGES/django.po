@@ -44,7 +44,7 @@ msgid "afd.label.forecast-office.01"
 msgstr "Forecast office:"
 
 msgid "afd.label.versions.01"
-msgstr "Versions for @wfo_name:"
+msgstr "Versions for {wfo_name}:"
 
 msgid "afd.table-header.chance-precip.01"
 msgstr "Chance of precipitation"
@@ -95,19 +95,19 @@ msgid "alerts.table-header.alert-type.01"
 msgstr "Type"
 
 msgid "alerts.text.counties-in.01"
-msgstr "Counties in @area"
+msgstr "Counties in {area}"
 
 msgid "alerts.text.in-effect-from.01"
-msgstr "In effect from @start"
+msgstr "In effect from {start}"
 
 msgid "alerts.text.in-effect-from-until.01"
-msgstr "In effect from @start – @end"
+msgstr "In effect from {start} – {end}"
 
 msgid "alerts.text.including-cities.01"
 msgstr "Including these cities"
 
 msgid "alerts.text.issued-by.01"
-msgstr "Issued by @sender"
+msgstr "Issued by {sender}"
 
 msgid "backend.banner.under-development.01"
 msgstr "Under development"
@@ -125,16 +125,16 @@ msgid "backend.login.sso-login-path.01"
 msgstr "SSO Login Path"
 
 msgid "daily-forecast.aria.condition.01"
-msgstr "Condition: @description"
+msgstr "Condition: {description}"
 
 msgid "daily-forecast.aria.high-not-applicable.01"
 msgstr "High temperature not applicable"
 
 msgid "daily-forecast.aria.high-of.01"
-msgstr "High of @degrees℉"
+msgstr "High of {degrees}℉"
 
 msgid "daily-forecast.aria.low-of.01"
-msgstr "Low of @degrees℉"
+msgstr "Low of {degrees}℉"
 
 msgid "daily-forecast.heading.hourly-forecast.01"
 msgstr "Hourly forecast"
@@ -176,7 +176,7 @@ msgid "daily-forecast.table-header.low.01"
 msgstr "Low"
 
 msgid "daily-forecast.text.chance-precip.02"
-msgstr "@percent% chance of precipitation"
+msgstr "{percent}% chance of precipitation"
 
 msgid "daily-forecast.button.details-toggle-charts.01"
 msgstr "Charts"
@@ -200,10 +200,10 @@ msgid "footer.text.usa-gov-site-alt.01"
 msgstr "An official website of the United States government"
 
 msgid "forecast.aria.current-conditions-feels-like.01"
-msgstr "It feels like @temperature ℉."
+msgstr "It feels like {temperature} ℉."
 
 msgid "forecast.aria.current-conditions-narrative.01"
-msgstr "Weather as of @time. The weather in @place is @conditions. Temperature is @temperature ℉."
+msgstr "Weather as of {time}. The weather in {place} is {conditions}. Temperature is {temperature} ℉."
 
 msgid "forecast.current.feels-like.01"
 msgstr "Feels like"
@@ -305,10 +305,10 @@ msgid "frontpage.text.is-coming-2-graf.01"
 msgstr "As you explore, you may notice that we’re missing features you’re accustomed to seeing on weather.gov. This site is updated every two weeks with new features. Continue to check back to watch the site expand!"
 
 msgid "frontpage.text.is-coming-3-graf.01"
-msgstr "Because it’s a work in progress, this site has a long way to go before replacing weather.gov. In the meantime, you can still <a href='@url' class='usa-link'>access weather.gov</a> and all the tools it offers. You should continue to rely on weather.gov as the authoritative source for weather information."
+msgstr "Because it’s a work in progress, this site has a long way to go before replacing weather.gov. In the meantime, you can still <a href='{url}' class='usa-link'>access weather.gov</a> and all the tools it offers. You should continue to rely on weather.gov as the authoritative source for weather information."
 
 msgid "frontpage.text.touchpoints-1-graf.01"
-msgstr "<a href='@url' class='usa-link'>Tell us what you think</a> about how beta.weather.gov looks and functions."
+msgstr "<a href='{url}' class='usa-link'>Tell us what you think</a> about how beta.weather.gov looks and functions."
 
 msgid "hourly-charts.heading.chance-precip.01"
 msgstr "Chance of precipitation"
@@ -347,7 +347,7 @@ msgid "hourly-table.aria.scroll-right.01"
 msgstr "scroll right"
 
 msgid "hourly-table.aria.table-description.01"
-msgstr "Detailed hourly weather data for @month/@day. The rows are weather variables, the columns are hours."
+msgstr "Detailed hourly weather data for {month}/{day}. The rows are weather variables, the columns are hours."
 
 msgid "hourly-table.labels.condition.01"
 msgstr "Condition"
@@ -371,7 +371,7 @@ msgid "hourly-table.table-header.chance-precip.01"
 msgstr "Chance of precipitation"
 
 msgid "hourly-table.text.gusting.01"
-msgstr "with gusts up to @gustSpeed mph"
+msgstr "with gusts up to {gustSpeed} mph"
 
 msgid "loader.loading-text.01"
 msgstr "Loading the forecast"
@@ -449,16 +449,16 @@ msgid "satellite.heading.satellite.01"
 msgstr "Satellite"
 
 msgid "theme.text.submitted-by.01"
-msgstr "Submitted by @author_name on @month/@day"
+msgstr "Submitted by {author_name} on {month}/{day}"
 
 msgid "units.dbz.01"
 msgstr "dBz"
 
 msgid "units.inches.01"
-msgstr "@inches\""
+msgstr "{inches}\""
 
 msgid "units.mercury-inches.01"
-msgstr "@mercury_inches in (@mbar&nbsp;mb)"
+msgstr "{mercury_inches} in ({mbar}&nbsp;mb)"
 
 msgid "units.miles.01"
 msgstr "miles"
@@ -467,7 +467,7 @@ msgid "units.feet.01"
 msgstr "feet"
 
 msgid "units.mph.02"
-msgstr "@speed mph"
+msgstr "{speed} mph"
 
 msgid "uswds-banner.gov.description_html.01"
 msgstr "A <strong>.gov</strong> website belongs to an official government organization in the United States."
@@ -497,10 +497,10 @@ msgid "uswds-banner.skip-to-content.01"
 msgstr "Skip to main content"
 
 msgid "wfo-info.caption.coverage-area-map.01"
-msgstr "Coverage area for @wfo WFO"
+msgstr "Coverage area for {wfo} WFO"
 
 msgid "wfo-info.caption+aria.coverage-area-map.01"
-msgstr "This includes @counties"
+msgstr "This includes {counties}"
 
 msgid "wfo-info.heading.contact-us.01"
 msgstr "Contact us"
@@ -515,7 +515,7 @@ msgid "wfo-info.labels.about.01"
 msgstr "About"
 
 msgid "wfo-info.labels.wfo.01"
-msgstr "@wfoName (@wfoCode) National Weather Service Office"
+msgstr "{wfoName} ({wfoCode}) National Weather Service Office"
 
 msgid "wfo-info.link.area-forecast-discussion"
 msgstr "Current Area Forecast Discussion"
@@ -545,31 +545,31 @@ msgid "weather-story.link.area-forecast-discussion.01"
 msgstr "Area Forecast Discussion"
 
 msgid "weather-story.text.created-by.03"
-msgstr "<strong class='text-base-dark'>Created: @date</strong> by the <a class='usa-link' href='@wfo_url'>@wfo_name WFO</a>"
+msgstr "<strong class='text-base-dark'>Created: {date}</strong> by the <a class='usa-link' href='{wfo_url}'>{wfo_name} WFO</a>"
 
 msgid "wind.labels.calm.01"
 msgstr "calm"
 
 msgid "wind.labels.speed-from-north.01"
-msgstr "@speed mph from the north"
+msgstr "{speed} mph from the north"
 
 msgid "wind.labels.speed-from-northeast.01"
-msgstr "@speed mph from the northeast"
+msgstr "{speed} mph from the northeast"
 
 msgid "wind.labels.speed-from-east.01"
-msgstr "@speed mph from the east"
+msgstr "{speed} mph from the east"
 
 msgid "wind.labels.speed-from-southeast.01"
-msgstr "@speed mph from the southeast"
+msgstr "{speed} mph from the southeast"
 
 msgid "wind.labels.speed-from-south.01"
-msgstr "@speed mph from the south"
+msgstr "{speed} mph from the south"
 
 msgid "wind.labels.speed-from-southwest.01"
-msgstr "@speed mph from the southwest"
+msgstr "{speed} mph from the southwest"
 
 msgid "wind.labels.speed-from-west.01"
-msgstr "@speed mph from the west"
+msgstr "{speed} mph from the west"
 
 msgid "wind.labels.speed-from-northwest.01"
-msgstr "@speed mph from the northwest"
+msgstr "{speed} mph from the northwest"

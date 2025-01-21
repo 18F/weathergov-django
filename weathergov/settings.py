@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'weather.context_processors.route_info',
             ],
         },
     },
@@ -131,7 +132,8 @@ USE_TZ = True
 
 STATIC_URL = '/assets/'
 STATICFILES_DIRS = [
-    BASE_DIR / "weathergov/assets"
+    BASE_DIR / "weathergov/frontend/assets",
+    BASE_DIR / "weathergov/frontend"
 ]
 
 # Default primary key field type
@@ -143,3 +145,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOCALE_PATHS = [
     BASE_DIR / "locale"
 ]
+
+# Custom site information
+SITE_LOGO = "/assets/logo.svg"
+SITE_NAME = "beta.weather.gov"
+SITE_SLOGAN = "National Weather Service"

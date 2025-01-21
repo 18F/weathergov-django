@@ -1,0 +1,33 @@
+{% load i18n %}
+<div id="block-new-weather-theme-sitebranding" class="contextual-region block block-system block-system-branding-block">
+    <a href="/" class="display-flex flex-align-center flex-wrap text-no-underline margin-y-2" rel="home">
+        {% if site_logo %}
+        <img class="height-9" src="{{ site_logo }}" alt=""/>
+        {% endif %}
+        <div class="site-info padding-x-2 display-flex flex-column flex-align-start">
+            {% if site_name %}
+            <span class="site-name display-block font-heading-lg desktop:font-heading-xl text-secondary-darkest text-bold">
+                {{ site_name }}
+            </span>
+            {% endif %}
+            {% if site_slogan %}
+            <span class="site-slogan display-block font-sans-2xs desktop:font-sans-xs text-base-dark padding-left-05">
+                {{ site_slogan  }}
+            </span>
+            {% endif %} 
+        </div>
+        <span class="display-flex flex-align-center bg-gold-10v text-black text-uppercase padding-y-05 padding-left-1 padding-right-105 font-sans-xs radius-md margin-left-1 margin-top-105 tablet:margin-top-0">
+            <svg
+                class="usa-icon height-205 width-205 margin-right-05 text-top margin-bottom-2px"
+                aria-hidden="true"
+                focusable="false"
+                role="img"
+            >
+                <use
+                    xlink:href="/assets/images/uswds/sprite.svg#construction_worker"
+                ></use>
+            </svg>
+            {% trans "backend.banner.under-development.01" %}
+        </span>
+    </a>
+</div>
