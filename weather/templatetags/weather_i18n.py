@@ -14,6 +14,11 @@ def t(value, args=False):
             result = result.replace(key, val)
         return result
     return _(value)
+
+def json_encode(value):
+    if(isinstance(value, dict)):
+        return mark_safe(json.dumps(value))
+    return ""
     
 @register.simple_tag
 def trans_with_args(value, *args, **kwargs):
@@ -22,4 +27,6 @@ def trans_with_args(value, *args, **kwargs):
         translated.format(**kwargs)
     )
 
+
 register.filter("t", t)
+register.filter("json_encode", json_encode)

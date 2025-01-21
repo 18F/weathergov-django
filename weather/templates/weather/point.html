@@ -2,6 +2,13 @@
 {% block head_js %}
     <script src="/assets/js/point.page.js"></script>
     <script src="/assets/js/point.page.components.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" id="data-wx-leaflet" defer></script>
+    <script src="https://unpkg.com/esri-leaflet@3.0.12/dist/esri-leaflet.js" id="data-wx-leaflet-esri" defer></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@4.2.3/dist/esri-leaflet-vector.js" id="data-ex-leaflet-esri-vector" defer></script>
+{% endblock %}
+
+{% block head_css %}
+    <link rel="stylesheet" type="text/css" href="/assets/css/leaflet.css" />
 {% endblock %}
 
 {% block page_content %}
@@ -13,6 +20,37 @@
                     {% include "weather/partials/alert-summary.html" with alerts=point.alerts.items %}
                 </div>
             </div>
+        {% endif %}
+
+        {% if point.error %}
+            <div class="grid-container padding-x-0 padding-y-2 grid-col-12 tablet-lg:grid-offset-2 tablet-lg:grid-col-8">
+                {% include 'weather/partials/uswds-alert.html' with level="error" body="forecast.errors.point.01"|t %}
+            </div>
+        {% else %}
+            <wx-tabbed-nav class="display-block position-relative">
+                <div id="tablist-label" class="usa-sr-only">{{ "forecast.labels.weather-info.01" | t }}</div>
+                <div class="position-sticky top-0 z-500 bg-white border-base-light border-top-0 border-bottom-2px margin-y-0">
+                    <div class="grid-container padding-x-0">
+                        <div role="tablist" class="tab-buttons display-flex flex-row top-4 grid-col-12" aria-labelledby="tablist-label">
+                            {% if point.alerts.items|length > 0 %}
+                                <button role="tab" id="alerts-tab-button" class="tab-button" data-tab-name="alerts" aria-controls="alerts">{{ "forecast.labels.alerts.01" | t }}</button>
+                            {% endif %}
+                            <button role="tab" id="current-conditions-tab-button" class="tab-button" data-tab-name="today" aria-controls="today">{{ "daily-forecast.labels.today.01" | t }}</button>
+                            <button role="tab" id="daily-tab-button" class="tab-button" data-tab-name="daily" aria-controls="daily">{{ "forecast.labels.seven-days.01" | t }}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-base-lightest padding-top-3 padding-bottom-8">
+                    {% if point.alerts.items|length > 0 %}
+                        <div class="wx-tab-container wx-focus-offset-205" id="alerts" role="tabpanel" aria-labelledby="alerts-tab-button" tabindex="0">
+                            {% include 'weather/partials/alerts.html' with alerts=point.alerts.items %}
+                        </div>
+                    {% endif %}
+
+                    <!-- rest -->
+            </wx-tabbed-nav>
+
         {% endif %}
     </div>
 {% endblock %}
