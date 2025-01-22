@@ -70,7 +70,8 @@ TEMPLATES = [
             ],
             'builtins': [
                 'django.templatetags.i18n',
-                'weather.templatetags.weather_i18n'
+                'weather.templatetags.weather_i18n',
+                'weather.templatetags.weather_partials'
             ]
         },
     },

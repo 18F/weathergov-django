@@ -5,6 +5,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" id="data-wx-leaflet" defer></script>
     <script src="https://unpkg.com/esri-leaflet@3.0.12/dist/esri-leaflet.js" id="data-wx-leaflet-esri" defer></script>
     <script src="https://unpkg.com/esri-leaflet-vector@4.2.3/dist/esri-leaflet-vector.js" id="data-ex-leaflet-esri-vector" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 {% endblock %}
 
 {% block head_css %}
@@ -47,6 +49,56 @@
                             {% include 'weather/partials/alerts.html' with alerts=point.alerts.items %}
                         </div>
                     {% endif %}
+
+                    <div class="wx-tab-container wx-focus-offset-205" id="today" role="tabpanel" aria-labelledby="current-conditions-tab-button" tabindex="0">
+                        <div class="grid-container tablet:padding-x-2 desktop:padding-x-4 padding-x-0">
+                            <div class="grid-row desktop__wx-grid-gap-lg">
+                                <div class="desktop:grid-col-4 display-flex flex-column">
+                                    {% include "weather/partials/observations.html" with obs=point.observed %}
+                                </div>
+                                <div class="desktop:grid-col-8 display-flex flex-column">
+                                    {% if point.forecast.error or point.forecast.days|length == 0 %}
+                                        {% include 'weather/partials/uswds-alert.html' with level="error" body="forecast.errors.loading.01"|t %}
+                                    {% else %}
+                                        {% include 'weather/partials/today-summary-forecast.html' with forecast=point.forecast %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Weather Story Image here -->
+                        {#  set weather_story =  drupal_block("weathergov_weather_story_image", { wfo: point.grid.wfo }) #}
+                        {% if  weather_story.content|length > 0  %}
+                            {{ weather_story }}
+                        {% else %}
+                            <div class="grid-container margin-top-4 padding-x-0 tablet:padding-x-2 desktop:padding-x-4">
+                                <div class="grid-row bg-accent-cool-lightest border-1px border-base-light padding-x-2">
+                                    <div class="display-flex flex-align-center padding-y-105">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <rect width="24" height="24" fill="transparent"/>
+                                            <path d="M6 5H18V6H6V5Z" fill="#0085CA"/>
+                                            <path d="M6 10H18V11H6V10Z" fill="#0085CA"/>
+                                            <path d="M18 15H6V16H18V15Z" fill="#0085CA"/>
+                                            <path d="M6 12H16V13H6V12Z" fill="#0085CA"/>
+                                            <path d="M16 17H6V18H16V17Z" fill="#0085CA"/>
+                                            <path d="M6 7H16V8H6V7Z" fill="#0085CA"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4 2H20V22H4V2ZM5 3H19V21H5V3Z" fill="#0085CA"/>
+                                        </svg>
+                                        <a class="usa-link margin-left-1" href="/afd/{{ point.grid.wfo | normalize_wfo }}">{{ "forecast.link.area-forecast-discussion.01" | t }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="grid-container tablet:padding-x-2 desktop:padding-x-4 padding-x-0">
+                            <div class="grid-row desktop__wx-grid-gap-lg">
+                                <div class="desktop:grid-col-6 wx-radar-wrapper">
+                                    {#% include '@new_weather_theme/partials/radar.html.twig' with { place: point.place.fullName, point: point.point  } %#}
+                                </div>
+                                <div class="desktop:grid-col-6 wx-satellite-wrapper">
+                                    {#% include '@new_weather_theme/partials/satellite.html.twig' %#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- rest -->
             </wx-tabbed-nav>
