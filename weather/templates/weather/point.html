@@ -7,10 +7,12 @@
     <script src="https://unpkg.com/esri-leaflet-vector@4.2.3/dist/esri-leaflet-vector.js" id="data-ex-leaflet-esri-vector" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://radar.weather.gov/cmi-radar/cmi-radar.6602f65c.js" data-wx-radar-cmi="true" defer></script>
 {% endblock %}
 
 {% block head_css %}
     <link rel="stylesheet" type="text/css" href="/assets/css/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/radar/cmi-radar.6602f65c.css" />
 {% endblock %}
 
 {% block page_content %}
@@ -91,10 +93,10 @@
                         <div class="grid-container tablet:padding-x-2 desktop:padding-x-4 padding-x-0">
                             <div class="grid-row desktop__wx-grid-gap-lg">
                                 <div class="desktop:grid-col-6 wx-radar-wrapper">
-                                    {#% include '@new_weather_theme/partials/radar.html.twig' with { place: point.place.fullName, point: point.point  } %#}
+                                    {%  radar place=point.place.fullName point=point.point %}
                                 </div>
                                 <div class="desktop:grid-col-6 wx-satellite-wrapper">
-                                    {#% include '@new_weather_theme/partials/satellite.html.twig' %#}
+                                    {% include "weather/partials/satellite.html" with point=point %}
                                 </div>
                             </div>
                         </div>

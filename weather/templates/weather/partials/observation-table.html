@@ -69,7 +69,7 @@
                 {% if obs.data.barometricPressure.inHg == None %}
                     <span class="text-base font-mono-xs"> {{  "abbreviations.not-applicable.01" | t}}</span>
                 {% else %}
-                    {% trans_with_args "units.mercury-inches.01" mercury_inches=obs.data.batometricPressure.inHg mbar=obs.data.barometricPressure.mb %}
+                    {% trans_with_args "units.mercury-inches.01" mercury_inches=obs.data.barometricPressure.inHg mbar=obs.data.barometricPressure.mb %}
                 {% endif %}
             </td>
         </tr>

@@ -3,18 +3,18 @@
         <div class="grid-row display-flex flex-align-start border-bottom-1px border-base-lighter padding-bottom-2">
             <div class="daily-date-and-temp display-flex flex-row flex-justify flex-align-center tablet:grid-col-6 tablet__flex-justify-start">
                 <h3 class="padding-0 margin-0">
-                    <time class="display-block text-bold font-heading-md text-primary-dark minw-15 margin-right-3" datetime="{{ today.period.0.startTime }}">
+                    <time class="display-block text-bold font-heading-md text-primary-dark minw-15 margin-right-3" datetime="{{ day.period.0.startTime }}">
                         {% if dayLabel %}
                             <span>{{ dayLabel }}, </span>
                         {% else %}
-                            <span>{{ today.periods.0.dayName }}, </span>
+                            <span>{{ day.periods.0.dayName }}, </span>
                         {% endif %}
-                        <span class="display-block">{{ today.periods.0.monthAndDay }}</span>
+                        <span class="display-block">{{ day.periods.0.monthAndDay }}</span>
                     </time>
                 </h3>
 
                 <div class="display-flex">
-                    {% daily_high_low periods=today.periods %}
+                    {% daily_high_low periods=day.periods %}
                 </div>
             </div>
 
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="grid-row grid-gap">
-        {% for period in today.periods %}
+        {% for period in day.periods %}
             <div class="wx-daily-forecast-summary-area wx-daily-forecast-summary-area--{% if period.isOvernight %}overnight{% elif period.isDaytime%}daytime{%  else %}other{% endif %} grid-col-12">
                 <span class="display-block font-family-mono text-uppercase font-body-xs margin-bottom-1 text-primary-darker wx-marker-before">
                     {{label}}
@@ -64,7 +64,7 @@
         {% endfor %}
     </div>
 
-    {% if dayHours|length > 0 %}
+    {% if day.hours|length > 0 %}
     <div>
         {#  Summary Temperature Chart #}
         <div class="wx-chart-wrapper margin-top-0 margin-bottom-4">
@@ -72,10 +72,10 @@
                 {{ "hourly-table.labels.temperature.01" | t }}
             </span>
             <div class="position-sticky left-0 display-flex flex-justify padding-top-2 padding-bottom-105">
-                {% include "@new_weather_theme/partials/scroll-buttons.html.twig" %}
+                {% include "weather/partials/scroll-buttons.html" %}
             </div>
-            <div class="wx-chart wx-hourly-temp-chart-container margin-bottom-105 position-relative grid-col-12 width-full overflow-x-auto"  tabindex="0" data-times="{{ times }}" data-temps="{{ point.forecast.today.filtered.temps | json_encode }}" data-feels-like="{{ point.forecast.today.filtered.feelsLike | json_encode }}" data-sync-scrolling="true" data-hide-y-axis="true" data-use-max-y="true">
-                <div class="maxh-card-lg" style="width: max(100%, calc(var(--chart-datapoint-width) * {{point.forecast.today.filtered.times|length}}))">
+            <div class="wx-chart wx-hourly-temp-chart-container margin-bottom-105 position-relative grid-col-12 width-full overflow-x-auto"  tabindex="0" data-times="{{ times|json_encode }}" data-temps="{{ temps | json_encode }}" data-feels-like="{{ feelsLike | json_encode }}" data-sync-scrolling="true" data-hide-y-axis="true" data-use-max-y="true">
+                <div class="maxh-card-lg" style="width: max(100%, calc(var(--chart-datapoint-width) * {{times|length}}))">
                     <canvas>
                     </canvas>
                 </div>

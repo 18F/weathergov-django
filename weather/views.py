@@ -14,20 +14,5 @@ def point_location(request, lat, lon):
     r = requests.get(url)
     # TODO: Put some error handling here
     point = r.json()
-
-    # We need to reprocess (filter) some array data in
-    # the forecast data in order to display this in the templates
-    # properly. In Drupal, we were doing this logic in the
-    # template.
-    filtered = {
-        'times': [],
-        'temps': [],
-        'feelsLike': []
-    }
-    point["forecast"]["days"][0]["filtered"] = filtered
-    for hour in point["forecast"]["days"][0]["hours"]:
-        filtered['times'].append(hour['hour'])
-        filtered['temps'].append(hour['temperature']['degF'])
-        filtered['feelsLike'].append(hour['apparentTemperature']['degF'])
         
     return render(request, "weather/point.html", locals())

@@ -4,6 +4,7 @@
             <span>{% trans "wind.labels.calm.01" %}</span>
         {% else %}
             <span>{% trans_with_args "units.mph.02"  speed=speed.mph %}</span>
+            {% if has_direction %}
             <span class="padding-x-05">{{ direction.cardinalShort }}</span>
             <span class="display-flex flex-align-center margin-bottom-2px">
                 {% comment %}
@@ -15,6 +16,7 @@
                     <use xlink:href="/assets/images/spritesheet.svg#wx_wind_arrow"></use>
                 </svg>
             </span>
+            {% endif %}
         {% endif %}
     </div>
     {% comment %}

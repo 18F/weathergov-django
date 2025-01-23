@@ -8,10 +8,7 @@
         <div class="flex-1 height-full">
             <ol class="usa-list--unstyled height-full">
                 {# Attempt to render the period(s) associated with the current day #}
-                {%  with dayLabel="daily-forecast.labels.today.01"|t %}
-                    {% include 'weather/partials/daily-summary-list-item.html' with itemId="quick-forecast-summary" alerts=today.alerts qpf=precipHours  %}
-                {% endwith %}
-                {# set precipIndex = 1 #}
+                {% daily_summary_list_item day=forecast.days.0 dayLabel="daily-forecast.labels.today.01"|t %}
             </ol>
         </div>
   {% endwith %}

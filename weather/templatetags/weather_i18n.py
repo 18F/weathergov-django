@@ -16,8 +16,8 @@ def t(value, args=False):
     return _(value)
 
 def json_encode(value):
-    if(isinstance(value, dict)):
-        return mark_safe(json.dumps(value))
+    if isinstance(value, dict) or isinstance(value, list):
+        return json.dumps(value)
     return ""
 
 def normalize_wfo(value):
