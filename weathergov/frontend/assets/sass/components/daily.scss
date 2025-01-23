@@ -1,4 +1,6 @@
 @use "uswds-core" as *;
+@forward "uswds-theme";
+@forward "uswds";
 
 /* Daily Forecast Block Overrides
 ------------------------------------- */
@@ -73,4 +75,47 @@ wx-daily-forecast {
 
 .wx-daily-forecast-list-item-inner[role="tabpanel"][data-tabpanel-active="true"] {
     display: revert;
+}
+
+/* Styles for the daily forecast list item
+--------------------------------------------------- */
+.wx-daily-forecast-item-summary-area--other {
+    margin-bottom: units(1);
+
+    > span {
+        @extend .wx-marker-before--indigo;
+    }
+}
+
+.wx-daily-forecast-item-summary-area--overnight {
+    margin-bottom: units(1);
+
+    > span {
+        @extend .wx-marker-before--midnight-indigo;
+    }
+}
+
+.wx-daily-forecast-item-summary-area--daytime {
+    margin-bottom: units(1);
+
+    > span {
+        @extend .wx-marker-before--yellow;
+    }
+}
+
+@include at-media("tablet"){
+    .wx-daily-forecast-item-summary-area--other {
+        margin-bottom: units(3);
+        @include grid-col(6);
+    }
+
+    .wx-daily-forecast-item-summary-area--overnight {
+        margin-bottom: units(3);
+        @include grid-col(12);
+    }
+
+    .wx-daily-forecast-item-summary-area--daytime {
+        margin-bottom: units(1);
+        @include grid-col(6);
+    }
 }

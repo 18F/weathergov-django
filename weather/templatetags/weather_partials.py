@@ -33,10 +33,13 @@ def daily_high_low(**kwargs):
 # Renders a single alert link
 @register.inclusion_tag("weather/partials/alert-link.html")
 def alert_link(**kwargs):
+    result = {}
     alert = kwargs["alert"]
+    result["alertCount"] = 1
+    result["alert"] = alert
     result["alertId"] = alert["id"]
     result["alertType"] = alert["event"]
-    result["alertLeve"] = alert["level"]
+    result["alertLevel"] = alert["level"]
 
     return result
 
@@ -50,7 +53,7 @@ def summary_alert_link(**kwargs):
     alert_level = None
     if num_alerts == 0:
         return {}
-    elif num_alerts > 1:
+    elif num_alerts == 1:
         alert_id = alerts['items'][0]['id']
         alert_type = alerts['items'][0]['event']
         alert_level = alerts['items'][0]['level']
@@ -221,6 +224,9 @@ def hourly_table(**kwargs):
     result = {}
     day = kwargs["day"]
     result["qpf"] = kwargs["qpf"]
+    result["itemId"] = kwargs.get("itemId", False)
+    if not result["itemId"]:
+        result["itemId"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
     result["periods"] = day["periods"]
     result["hours"] = day["hours"]
     result["alerts"] = day["alerts"]["items"]
@@ -236,7 +242,11 @@ def hourly_table(**kwargs):
 def hourly_charts(**kwargs):
     result = {}
     hours = kwargs["hours"]
+    day = kwargs["day"]
     result["qpf"] = kwargs["qpf"]
+    result["itemId"] = kwargs.get("itemId", False)
+    if not result["itemId"]:
+        result["itemId"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
     result["times"] = [hour["hour"] for hour in hours if "hour" in hour]
     result["temps"] = [hour["temperature"]["degF"] for hour in hours]
     result["feelsLike"] = [hour["apparentTemperature"]["degF"] for hour in hours]
@@ -281,6 +291,8 @@ def precip_table(**kwargs):
     result["as_table"] = kwargs.get("as_table", True)
     result["times"] = [f"{period['startHour']}-{period['endHour']}" for period in qpf["periods"]]
     result["liquid"] = [period["liquid"]["in"] for period in qpf["periods"]]
+    result["snow"] = []
+    result["ice"] = []
 
     # If other kinds of liquids are available, we process them
     result["liquidTitle"] = _("precip-table.table-header+legend.rain.01")

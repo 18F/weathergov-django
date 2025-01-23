@@ -47,7 +47,7 @@ only be a nighttime period.
                 {# Start of conditions #}
                 <div class="grid-row grid-gap grid-col-12 tablet-lg:grid-col-8">
                     {% for period in day.periods %}
-                        <div class="wx-daily-forecast-summary-area wx-daily-forecast-summary-area--{% if period.isOvernight %}overnight{% elif period.isDaytime%}daytime{%  else %}other{% endif %} grid-col-12">
+                        <div class="grid-col-12 wx-daily-forecast-summary-area wx-daily-forecast-item-summary-area--{% if period.isOvernight %}overnight{% elif period.isDaytime%}daytime{%  else %}other{% endif %}">
                             <span class="display-block font-family-mono text-uppercase font-body-xs margin-bottom-1 text-primary-darker wx-marker-before">
                                 {{label}}
                                 {% if period.isOvernight %}
@@ -91,8 +91,8 @@ only be a nighttime period.
                 <div class="">
                     {% include 'weather/partials/forecast-details-toggle.html' %}
                     <h4 class="font-heading-md text-normal text-primary-darker margin-top-0 margin-bottom-205">{% trans "daily-forecast.heading.hourly-forecast.01" %}</h4>
-                    {% hourly_table day=day qpf=day.qpf hours=day.hours %}
-                    {% hourly_charts hours=day.hours qpf=day.qpf %}
+                    {% hourly_table day=day qpf=day.qpf hours=day.hours itemId=itemId%}
+                    {% hourly_charts hours=day.hours qpf=day.qpf itemId=itemId day=day %}
                 </div>
             {% endif %}
         </div>

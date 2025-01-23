@@ -1,6 +1,3 @@
-{#
-This partial expects an array of forecast days.
-#}
 <nav class="wx-quick-forecast grid-col-12 margin-bottom-2" aria-label="{{'daily forecast tab navigation'}}">
     {% for day in days %}
         {% quick_forecast_link_item day=day %}

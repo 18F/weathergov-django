@@ -34,7 +34,7 @@ const createCharts = async () => {
     "/themes/new_weather_theme/assets/images/weather/wx_snow_pattern.svg",
   );
   const icePattern = await makePattern(
-    "/themes/new_weather_theme/assets/images/weather/wx_ice_pattern.svg",
+    "/assets/images/weather/wx_ice_pattern.svg",
   );
 
   for (const container of chartContainers) {

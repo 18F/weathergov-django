@@ -14,11 +14,11 @@
         </svg>
     </div>
     <a
-        {#
+        {% comment %}
         Table cells have a set line height. Set our own line height so that we
         know what we're working with. The margin nudges the text down a bit so it
         vertically aligns with the icon.
-        #}
+        {% endcomment %}
         class="line-height-sans-2 margin-top-05"
         href="#{% if alertID == null %}alerts{% else %}alert_{{alertID}}{% endif %}">
         {{ alertType }}
