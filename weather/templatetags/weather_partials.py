@@ -1,5 +1,6 @@
 from django import template
 from django.utils.translation import gettext_lazy as _
+from django.utils import dateparse
 
 register = template.Library()
 
@@ -29,9 +30,19 @@ def daily_high_low(**kwargs):
         'show_low': show_low
     }
 
-# Renders the alert link in the daily summary
+# Renders a single alert link
 @register.inclusion_tag("weather/partials/alert-link.html")
 def alert_link(**kwargs):
+    alert = kwargs["alert"]
+    result["alertId"] = alert["id"]
+    result["alertType"] = alert["event"]
+    result["alertLeve"] = alert["level"]
+
+    return result
+
+# Renders the alert link in the daily summary
+@register.inclusion_tag("weather/partials/alert-link.html")
+def summary_alert_link(**kwargs):
     alerts = kwargs['alerts']
     num_alerts = alerts['metadata']['count']
     alert_id = None
@@ -52,6 +63,38 @@ def alert_link(**kwargs):
         'alertType': alert_type,
         'alertLevel': alert_level,
         'alertCount': num_alerts
+    }
+
+# Renders a daily forecast list item
+# for a given day
+@register.inclusion_tag("weather/partials/daily-forecast-list-item.html")
+def daily_forecast_list_item(**kwargs):
+    day = kwargs['day']
+    day_label = kwargs.get("dayLabel", day["periods"][0]["dayName"])
+    day_hours = day['hours']
+    item_id = kwargs.get("itemId", None)
+    qpf = day["qpf"]
+    alerts = day["alerts"]
+
+    # We need to ensure there is always an item id
+    # for use by the element. If one is not provided,
+    # this is the default that we use
+    if not item_id:
+        item_id = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
+
+    # Map data for the chart
+    temps = [hour['temperature']['degF'] for hour in day_hours]
+    feels_like = [hour['apparentTemperature']['degF'] for hour in day_hours]
+
+    return {
+        'day': day,
+        'dayLabel': day_label,
+        'dayHours': day_hours,
+        'itemId': item_id,
+        'alerts': alerts,
+        'temps': temps,
+        'feelsLike': feels_like,
+        'qpf': qpf
     }
 
 # Renders a daily summary list item
@@ -144,3 +187,108 @@ def radar(**kwargs):
         'intensities': INTENSITIES
     }
     
+# Render a quick forecast link item
+@register.inclusion_tag("weather/partials/quick-forecast-link-item.html")
+def quick_forecast_link_item(**kwargs):
+    result = {}
+    day = kwargs["day"]
+    result["day"] = day
+    result["day_id"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
+    result["temps"] = [period['data']["temperature"]["degF"] for period in day["periods"]]
+    result["low"] = min(result["temps"])
+    result["high"] = max(result["temps"])
+    result["numPeriods"] = len(day["periods"])
+    is_first_period = len(day["periods"]) == 1
+    not_overnight = not day["periods"][0]["isOvernight"]
+    not_daytime = not day["periods"][0]["isDaytime"]
+    result["isNightPeriod"] = is_first_period and not_overnight and not_daytime
+    result["pop"] = day["maxPop"]
+    if result["pop"] == None:
+        result["pop"] = 0
+
+    # If there are no alerts, we need to specify
+    # a default for the highest alert level
+    result["hasAlertIcon"] = False
+    if day["alerts"]["metadata"]["count"] > 0:
+        result["hasAlertIcon"] = day["alerts"]["metadata"]["highest"] != ""
+
+    return result
+        
+    
+# Render an hourly details table
+@register.inclusion_tag("weather/partials/hourly-table.html")
+def hourly_table(**kwargs):
+    result = {}
+    day = kwargs["day"]
+    result["qpf"] = kwargs["qpf"]
+    result["periods"] = day["periods"]
+    result["hours"] = day["hours"]
+    result["alerts"] = day["alerts"]["items"]
+    start_timestamp = day["periods"][0]["start"]
+    start_time = dateparse.parse_datetime(start_timestamp)
+    result["for_day"] = f"{start_time.day:02d}"
+    result["for_month"] = f"{start_time.month:02d}"
+
+    return result
+
+# Render the hourly charts
+@register.inclusion_tag("weather/partials/hourly-charts.html")
+def hourly_charts(**kwargs):
+    result = {}
+    hours = kwargs["hours"]
+    result["qpf"] = kwargs["qpf"]
+    result["times"] = [hour["hour"] for hour in hours if "hour" in hour]
+    result["temps"] = [hour["temperature"]["degF"] for hour in hours]
+    result["feelsLike"] = [hour["apparentTemperature"]["degF"] for hour in hours]
+    result["pops"] = [hour["probabilityOfPrecipitation"]["percent"] for hour in hours]
+    result["dewpoints"] = [hour["dewpoint"]["degF"] for hour in hours]
+    result["relativeHumidity"] = [hour["relativeHumidity"]["percent"] for hour in hours]
+    result["windSpeeds"] = [hour["windSpeed"]["mph"] for hour in hours]
+    result["windGusts"] = [hour["windGust"]["mph"] for hour in hours]
+    result["windDirections"] = [hour["windDirection"] for hour in hours]
+
+    return result
+    
+# Render the daily forecast quick-toggle component
+@register.inclusion_tag("weather/partials/daily-forecast-quick-toggle.html")
+def daily_forecast_quick_toggle(**kwargs):
+    result = {}
+    day = kwargs["day"]
+    result["day"] = day
+    result["dayId"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
+    result["temps"] = [period["data"]["temperature"] for period in day["periods"]]
+    result["low"] = min(result["temps"])
+    result["high"] = max(result["temps"])
+    result["numPeriods"] = len(day["periods"])
+    is_not_overnight = not day["periods"][0]["isOvernight"]
+    is_not_daytime = not day["periods"][0]["isDaytime"]
+    result["isNightPeriod"] = result["numPeriods"] == 1 and is_not_overnight and is_not_daytime
+    result["pop"] = day["maxPop"]
+    if result["pop"] == None:
+        result["pop"] = 0
+
+
+    result["hasAlertIcon"] = False
+    if day["alerts"]["metadata"]["count"] > 0:
+        result["hasAlertIcon"] = day["alerts"]["metadata"]["highest"] != ""
+
+# Render the QPF percipitation table
+@register.inclusion_tag("weather/partials/precip.html")
+def precip_table(**kwargs):
+    result = {}
+    qpf = kwargs["qpf"]
+    result["qpf"] = qpf
+    result["as_table"] = kwargs.get("as_table", True)
+    result["times"] = [f"{period['startHour']}-{period['endHour']}" for period in qpf["periods"]]
+    result["liquid"] = [period["liquid"]["in"] for period in qpf["periods"]]
+
+    # If other kinds of liquids are available, we process them
+    result["liquidTitle"] = _("precip-table.table-header+legend.rain.01")
+    if qpf['hasSnow']:
+        result["snow"] = [period["snow"]["in"] for period in qpf["periods"]]
+        result["liquidTitle"] = _("precip-table.table-header+legend.water.01")
+    if qpf["hasIce"]:
+        result["ice"] = [period["ice"]["in"] for period  in qpf["periods"]]
+        resullt["liquidTitle"] = _("precip-table.table-header+legend.water.01")
+
+    return result
