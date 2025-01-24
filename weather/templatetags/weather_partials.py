@@ -266,7 +266,7 @@ def daily_forecast_quick_toggle(**kwargs):
     day = kwargs["day"]
     result["day"] = day
     result["dayId"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
-    result["temps"] = [period["data"]["temperature"] for period in day["periods"]]
+    result["temps"] = [period["data"]["temperature"]["degF"] for period in day["periods"]]
     result["low"] = min(result["temps"])
     result["high"] = max(result["temps"])
     result["numPeriods"] = len(day["periods"])
@@ -281,6 +281,8 @@ def daily_forecast_quick_toggle(**kwargs):
     result["hasAlertIcon"] = False
     if day["alerts"]["metadata"]["count"] > 0:
         result["hasAlertIcon"] = day["alerts"]["metadata"]["highest"] != ""
+
+    return result
 
 # Render the QPF percipitation table
 @register.inclusion_tag("weather/partials/precip.html")
