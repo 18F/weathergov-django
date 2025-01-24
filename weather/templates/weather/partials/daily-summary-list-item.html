@@ -25,7 +25,7 @@
     </div>
     <div class="grid-row grid-gap">
         {% for period in day.periods %}
-            <div class="wx-daily-forecast-summary-area wx-daily-forecast-summary-area--{% if period.isOvernight %}overnight{% elif period.isDaytime%}daytime{%  else %}other{% endif %} grid-col-12">
+            <div class="wx-daily-forecast-summary-area wx-daily-forecast-summary-area--{% if period.isOvernight %}overnight{% elif period.isDaytime%}daytime{%  else %}other{% endif %}">
                 <span class="display-block font-family-mono text-uppercase font-body-xs margin-bottom-1 text-primary-darker wx-marker-before">
                     {{label}}
                     {% if period.isOvernight %}

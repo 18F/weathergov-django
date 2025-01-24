@@ -303,6 +303,6 @@ def precip_table(**kwargs):
         result["liquidTitle"] = _("precip-table.table-header+legend.water.01")
     if qpf["hasIce"]:
         result["ice"] = [period["ice"]["in"] for period  in qpf["periods"]]
-        resullt["liquidTitle"] = _("precip-table.table-header+legend.water.01")
+        result["liquidTitle"] = _("precip-table.table-header+legend.water.01")
 
     return result
