@@ -1,9 +1,11 @@
 import json
+import re
 from django.utils.translation import gettext_lazy as _
 from django import template
 from django.utils.safestring import mark_safe
 
 register = template.Library()
+
 
 def t(value, args=False):
     if(args):
@@ -26,6 +28,9 @@ def normalize_wfo(value):
         return "AFC"
     return value
 
+def normalize_alert_whitespace(text):
+    return mark_safe(re.sub("\n+", "<br />", text))
+
 @register.simple_tag
 def trans_with_args(value, *args, **kwargs):
     translated = _(value)
@@ -37,3 +42,4 @@ def trans_with_args(value, *args, **kwargs):
 register.filter("t", t)
 register.filter("json_encode", json_encode)
 register.filter("normalize_wfo", normalize_wfo)
+register.filter("normalize_alert_whitespace", normalize_alert_whitespace)

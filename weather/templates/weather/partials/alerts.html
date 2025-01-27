@@ -55,7 +55,7 @@
                             {% if alert.instruction %}
                                 <h4 class="wx-visual-h3 text-normal text-primary-dark">{{ "alerts.labels.what-to-do.01" | t }}</h4>
                                 <p>
-                                    {{ alert.instruction | linebreaks }}
+                                    {{ alert.instruction | normalize_alert_whitespace }}
                                 </p>
                             {% endif %}
 

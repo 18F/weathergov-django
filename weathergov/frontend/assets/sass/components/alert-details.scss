@@ -20,4 +20,8 @@ wx-alerts {
   .usa-accordion .usa-prose p {
     @include u-measure(6);
   }
+
+  usa-prose > p:empty {
+      display: none;
+  }
 }
