@@ -33,7 +33,7 @@
 @include at-media("desktop"){
     .wx-daily-forecast-summary-area--overnight,
     .wx-daily-forecast-summary-area--other {
-        margin-bottom: units(3);
+        margin-bottom: units(1);
         @include grid-col(6);
     }
 

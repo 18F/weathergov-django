@@ -18,9 +18,11 @@
                 </div>
             </div>
 
-            <div class="grid-col-12 tablet:grid-col-6 tablet:display-flex tablet:flex-justify-end margin-top-2 tablet:margin-top-0 daily-alert-summary">
-                {% summary_alert_link alerts=alerts %}
-            </div>
+            {% if alerts|length > 0 %}
+                <div class="grid-col-12 tablet:grid-col-6 tablet:display-flex tablet:flex-justify-end margin-top-2 tablet:margin-top-0 daily-alert-summary">
+                    {% summary_alert_link alerts=alerts %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="grid-row grid-gap">
