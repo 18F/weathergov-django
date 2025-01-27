@@ -96,7 +96,11 @@ wx-daily-forecast {
 }
 
 .wx-daily-forecast-item-summary-area--daytime {
-    margin-bottom: units(1);
+    margin-bottom: units(3);
+    
+    @include at-media(tablet) {
+        margin-bottom: units(1);
+    }
 
     > span {
         @extend .wx-marker-before--yellow;
