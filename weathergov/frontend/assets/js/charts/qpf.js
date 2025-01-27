@@ -31,7 +31,7 @@ const makePattern = async (imageUrl, size = 60) =>
 // function. That's why this is here.
 const createCharts = async () => {
   const snowPattern = await makePattern(
-    "/themes/new_weather_theme/assets/images/weather/wx_snow_pattern.svg",
+    "/assets/images/weather/wx_snow_pattern.svg",
   );
   const icePattern = await makePattern(
     "/assets/images/weather/wx_ice_pattern.svg",
