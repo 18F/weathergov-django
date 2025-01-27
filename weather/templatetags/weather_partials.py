@@ -86,8 +86,8 @@ def daily_forecast_list_item(**kwargs):
         item_id = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
 
     # Map data for the chart
-    temps = [hour['temperature']['degF'] for hour in day_hours]
-    feels_like = [hour['apparentTemperature']['degF'] for hour in day_hours]
+    temps = [hour['temperature']['degF'] for hour in day_hours if "temperature" in hour]
+    feels_like = [hour['apparentTemperature']['degF'] for hour in day_hours if "apparentTemperature" in hour]
 
     return {
         'day': day,
@@ -248,14 +248,14 @@ def hourly_charts(**kwargs):
     if not result["itemId"]:
         result["itemId"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
     result["times"] = [hour["hour"] for hour in hours if "hour" in hour]
-    result["temps"] = [hour["temperature"]["degF"] for hour in hours]
-    result["feelsLike"] = [hour["apparentTemperature"]["degF"] for hour in hours]
-    result["pops"] = [hour["probabilityOfPrecipitation"]["percent"] for hour in hours]
-    result["dewpoints"] = [hour["dewpoint"]["degF"] for hour in hours]
-    result["relativeHumidity"] = [hour["relativeHumidity"]["percent"] for hour in hours]
-    result["windSpeeds"] = [hour["windSpeed"]["mph"] for hour in hours]
-    result["windGusts"] = [hour["windGust"]["mph"] for hour in hours]
-    result["windDirections"] = [hour["windDirection"] for hour in hours]
+    result["temps"] = [hour["temperature"]["degF"] for hour in hours if "temperature" in hour]
+    result["feelsLike"] = [hour["apparentTemperature"]["degF"] for hour in hours if "apparentTemperature" in hour]
+    result["pops"] = [hour["probabilityOfPrecipitation"]["percent"] for hour in hours if "probabilityOfPrecipitation" in hour]
+    result["dewpoints"] = [hour["dewpoint"]["degF"] for hour in hours if "dewpoint" in hour]
+    result["relativeHumidity"] = [hour["relativeHumidity"]["percent"] for hour in hours if "relativeHumidity" in hour]
+    result["windSpeeds"] = [hour["windSpeed"]["mph"] for hour in hours if "windSpeed" in hour]
+    result["windGusts"] = [hour["windGust"]["mph"] for hour in hours if "windGust" in hour]
+    result["windDirections"] = [hour["windDirection"] for hour in hours if "windDirection" in hour]
 
     return result
     
