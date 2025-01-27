@@ -5,10 +5,11 @@
     <head>
         <title>
             {% if point.place %}
-                {{point.place.fullName}} | 
+            {{point.place.fullName}} | 
             {% endif %}
             beta.weather.gov | {{ "National Weather Service" | t }}
         </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" href="/assets/images/weather/favicons/nws-favicon.ico" />
         <link rel="stylesheet" type="text/css" href="/assets/css/styles.css" />
         {% block head_css %}{% endblock %}
