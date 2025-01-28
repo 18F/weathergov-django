@@ -1,44 +1,61 @@
 @use "uswds-core" as *;
+@forward "uswds-theme";
+@forward "uswds";
 
 /* AlertList Overrides
 -------------------------------------- */
 .usa-alert__body {
-  & a {
-    color: color("primary");
+    & a {
+        color: color("primary");
 
-    &:focus,
-    &:hover {
-      color: color("primary-dark");
+        &:focus,
+        &:hover {
+            color: color("primary-dark");
+        }
     }
-  }
-
-  &.wx-alert-li--warning {
-    background-color: color("red-cool-10v");
-
-    &::before {
-      background-color: color("red-50");
-    }
-  }
-
-  &.wx-alert-li--watch {
-    background-color: color("yellow-5");
-
-    &::before {
-      background-color: color("yellow-50v");
-    }
-  }
-
-  &.wx-alert-li--other {
-    background-color: color("base-lightest");
-
-    &::before {
-      background-color: color("base-dark");
-    }
-  }
 }
 
 wx-alerts .usa-accordion {
-  scroll-padding-top: units(6);
-  }
+    scroll-padding-top: units(6);
+}
+
+.wx-alert {
+    @extend .bg-base-lightest;
+
+    &[data-alert-level="watch"] {
+        border-left-color: color("yellow-50v");
+        .wx-alert-li {
+            background-color: color("yellow-5");
+
+            &::before {
+                background-color: color("yellow-50v");
+            }
+        }
+    }
+
+    &[data-alert-level="warning"]{
+        border-left-color: color("red-50");
+        .wx-alert-li {
+            background-color: color("red-cool-10v");
+            
+            &::before {
+                background-color: color("red-50");
+            }
+        }
+    }
+
+    &[data-alert-level="other"]{
+        border-left-color: color("gray-cool-30");
+        .wx-alert-li {
+            background-color: color("base-lightest");
+            
+            &::before {
+                background-color: color("base-dark");
+            }
+        }
+    }
+}
+
+
 
 

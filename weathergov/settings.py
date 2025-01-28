@@ -68,6 +68,11 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'weather.context_processors.route_info',
             ],
+            'builtins': [
+                'django.templatetags.i18n',
+                'weather.templatetags.weather_i18n',
+                'weather.templatetags.weather_partials'
+            ]
         },
     },
 ]

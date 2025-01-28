@@ -1,0 +1,36 @@
+{% if has_speed  %}
+    <div aria-hidden="true" class="display-flex flex-row flex-align-center">
+        {% if speed.mph == 0 %}
+            <span>{% trans "wind.labels.calm.01" %}</span>
+        {% else %}
+            <span>{% trans_with_args "units.mph.02"  speed=speed.mph %}</span>
+            {% if has_direction %}
+            <span class="padding-x-05">{{ direction.cardinalShort }}</span>
+            <span class="display-flex flex-align-center margin-bottom-2px">
+                {% comment %}
+                The +180 here is to account for the fact that wind direction
+                is reported as a FROM direction, but our arrow points in the
+                TO direction. So we just need to spin it 'round.
+                {% endcomment %}
+                <svg role="img" data-wind-direction class="width-2 height-2" style="transform: rotate({{ direction.degrees|add:'180' }}deg);">
+                    <use xlink:href="/assets/images/spritesheet.svg#wx_wind_arrow"></use>
+                </svg>
+            </span>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% comment %}
+    We have a dedicated block for screen readers to mitigate an issue with
+    VoiceOver treating spans as distinct elements and forcing users to navigate
+    between <th></th>em.
+    By putting all of the content into a single span, we can get VoiceOver to read
+    it in a more natural way.
+    {% endcomment %}
+    {% if speed.mph == 0 %}
+        <span class="usa-sr-only">{% trans "wind.labels.calm.01" %}}</span>
+    {% else %}
+        <span class="usa-sr-only">{{ sr_content }}</span>
+    {% endif %}
+{% else %}
+    <span class="text-base font-mono-xs">{% trans "abbreviations.not-applicable.01" %}</span>
+{% endif %}
