@@ -5,7 +5,9 @@
 
 .wx-daily-forecast-summary-area--other {
     margin-bottom: units(1);
-    @include grid-col(6);
+    @include at-media(tablet) {
+        @include grid-col(6);
+}
 
     > span {
         @extend .wx-marker-before--indigo;
