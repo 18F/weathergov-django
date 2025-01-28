@@ -1,4 +1,4 @@
-{% if speed.mph != None %}
+{% if has_speed  %}
     <div aria-hidden="true" class="display-flex flex-row flex-align-center">
         {% if speed.mph == 0 %}
             <span>{% trans "wind.labels.calm.01" %}</span>

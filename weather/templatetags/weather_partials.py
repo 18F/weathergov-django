@@ -135,9 +135,12 @@ def daily_summary_list_item(**kwargs):
 # Renders a wind speed and direction arrow
 @register.inclusion_tag("weather/partials/wind.html")
 def wind_speed_direction(**kwargs):
+    has_direction = False
     speed = kwargs["speed"]
+    has_speed = speed != None and speed != ""
     direction = kwargs["direction"]
-    has_direction = direction["cardinalLong"] != None
+    if direction and direction != "":
+        has_direction = direction["cardinalLong"] != None
     direction_name =  ""
     if has_direction:
         direction_name = direction["cardinalLong"].lower()
@@ -150,7 +153,8 @@ def wind_speed_direction(**kwargs):
         'speed': speed,
         'direction': direction,
         'sr_content': sr_content,
-        'has_direction': has_direction
+        'has_direction': has_direction,
+        'has_speed': has_speed,
     }
 
 # Renders the radar
