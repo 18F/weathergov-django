@@ -88,7 +88,7 @@ wx-daily-forecast {
 }
 
 .wx-daily-forecast-item-summary-area--overnight {
-    margin-bottom: units(1);
+    margin-bottom: units(3);
 
     > span {
         @extend .wx-marker-before--midnight-indigo;
