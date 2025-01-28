@@ -3,6 +3,7 @@ import requests
 import json
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from weather.models import Region
 
 # Create your views here.
 def index(request):
@@ -16,3 +17,27 @@ def point_location(request, lat, lon):
     point = r.json()
         
     return render(request, "weather/point.html", locals())
+
+def offices(request):
+    regions = []
+    for region in Region.objects.all():
+        entry = {
+            "id": region.id,
+            "name": region.name,
+            "weight": region.weight,
+            "wfos": []
+        }
+        wfos = region.wfo_set.all()
+        for wfo in wfos:
+            wfo_entry = {
+                "id": wfo.code.upper(),
+                "name": wfo.name,
+                "weight": wfo.weight
+            }
+            entry["wfos"].append(wfo_entry)
+        regions.append(entry)
+
+    return render(request, "weather/offices.html", locals())
+        
+    
+    
