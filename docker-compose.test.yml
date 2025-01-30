@@ -1,0 +1,62 @@
+services:
+  web-test:
+    extends:
+      file: ./docker-compose.yml
+      service: web
+    ports: !override
+      - 9080:80
+    links: !override
+      - database-test
+      - api-proxy-test
+      - api-interop-layer-test
+    networks: !override
+      - weather-gov-test
+    environment: # we want to extend, not override
+      API_URL: http://api-proxy-test:9081
+      INTEROP_URL: http://api-interop-layer-test:9082
+      DB_HOST: database-test
+    profiles: !override ["test"]
+  database-test:
+    extends:
+      file: ./docker-compose.yml
+      service: database
+    ports: !override
+      - 4306:3306
+    networks: !override
+      - weather-gov-test
+    profiles: !override ["test"]
+
+  api-interop-layer-test:
+    extends:
+      file: ./docker-compose.yml
+      service: api-proxy
+    ports: !override
+      - 9082:8082
+    networks: !override
+      - weather-gov-test
+    profiles: !override ["test"]
+
+  api-proxy-test:
+    extends:
+      file: ./docker-compose.yml
+      service: api-proxy
+    ports: !override
+      - 9081:8081
+    networks: !override
+      - weather-gov-test
+    profiles: !override ["test"]
+
+  spatial-test:
+    extends:
+      file: ./docker-compose.yml
+      service: spatial
+    links: !override
+      - database-test
+    networks: !override
+      - weather-gov-test
+    environment:
+      DB_HOST: database-test
+    profiles: !override ["test"]
+
+networks:
+  weather-gov-test:
