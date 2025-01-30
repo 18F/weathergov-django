@@ -36,4 +36,7 @@ python-lint:
 template-lint:
 	docker compose exec web djlint weather/templates/ --extension=html
 
+template-format:
+	docker compose exec web djlint weather/templates/ --reformat --extension=html
+
 lint: python-lint template-lint
