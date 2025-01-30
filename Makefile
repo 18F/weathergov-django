@@ -31,3 +31,9 @@ build-css: # Build CSS
 
 python-lint:
 	docker compose exec web python -m black .
+	docker compose exec web python -m flake8 .
+
+template-lint:
+	docker compose exec web djlint weather/templates/ --extension=html
+
+lint: python-lint template-lint
