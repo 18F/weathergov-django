@@ -1,5 +1,7 @@
 [tool.black]
 line-length=120
+unstable=true
+
 
 [tool.mypy]
 ignore_missing_imports = true
