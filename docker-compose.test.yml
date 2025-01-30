@@ -9,6 +9,8 @@ services:
       - database-test
       - api-proxy-test
       - api-interop-layer-test
+    depends_on: !override
+      - database-test
     networks: !override
       - weather-gov-test
     environment: # we want to extend, not override
@@ -16,6 +18,7 @@ services:
       INTEROP_URL: http://api-interop-layer-test:9082
       DB_HOST: database-test
     profiles: !override ["test"]
+
   database-test:
     extends:
       file: ./docker-compose.yml
