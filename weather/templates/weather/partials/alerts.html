@@ -70,7 +70,7 @@
                                                 {% trans_with_args  "alerts.text.counties-in.01" with area=area.area %}
                                             </h5>
                                             <ul class="usa-list margin-top-1 {% if area.counties|length > 7 %}wx-col-2{% endif %}">
-                                                {% for county in area.counties %}<li class="">{{ county }}</li>{% endfor %}
+                                                {% for county in area.counties %}<li>{{ county }}</li>{% endfor %}
                                             </ul>
                                             </wx-alert-county-region>
                                         {% endfor %}
@@ -80,7 +80,7 @@
                                                 {{ "alerts.text.including-cities.01" | t }}
                                             </h5>
                                             <ul class="usa-list margin-top-1 {% if alert.locations.cities|length > 7 %}wx-col-2{% endif %}">
-                                                {% for city in alert.locations.cities %}<li class="">{{ city }}</li>{% endfor %}
+                                                {% for city in alert.locations.cities %}<li>{{ city }}</li>{% endfor %}
                                             </ul>
                                             </wx-alert-cities>
                                         {% endif %}
@@ -93,7 +93,7 @@
                                     {% else %}
                                         <ul class="usa-list {% if alert.area|length > 7 %}wx-col-2{% endif %}">
                                             {% for areaName in alert.area %}
-                                                <li class="">{{ areaName }}</li>
+                                                <li>{{ areaName }}</li>
                                             {% endfor %}
                                         </ul>
                                     {% endif %}
