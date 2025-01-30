@@ -86,11 +86,7 @@ def daily_forecast_list_item(**kwargs):
 
     # Map data for the chart
     temps = [hour["temperature"]["degF"] for hour in day_hours if "temperature" in hour]
-    feels_like = [
-        hour["apparentTemperature"]["degF"]
-        for hour in day_hours
-        if "apparentTemperature" in hour
-    ]
+    feels_like = [hour["apparentTemperature"]["degF"] for hour in day_hours if "apparentTemperature" in hour]
 
     return {
         "day": day,
@@ -142,10 +138,10 @@ def daily_summary_list_item(**kwargs):
 def wind_speed_direction(**kwargs):
     has_direction = False
     speed = kwargs["speed"]
-    has_speed = speed != None and speed != ""
+    has_speed = speed is not None and speed != ""
     direction = kwargs["direction"]
     if direction and direction != "":
-        has_direction = direction["cardinalLong"] != None
+        has_direction = direction["cardinalLong"] is not None
     direction_name = ""
     if has_direction:
         direction_name = direction["cardinalLong"].lower()
@@ -175,12 +171,18 @@ def radar(**kwargs):
         {
             "dbz": "0–20",
             "description": "Very light precipitation or general clutter",
-            "gradient": "180deg, #7B88AE 0%, #5C71A6 17.64%, #445FA0 36.39%, #5DA9CC 61.25%, #59C0BA 73.2%, #52D6A2 87.85%, #3FD657 100%",
+            "gradient": (
+                "180deg, #7B88AE 0%, #5C71A6 17.64%, #445FA0 36.39%, #5DA9CC 61.25%, #59C0BA 73.2%, #52D6A2 87.85%,"
+                " #3FD657 100%"
+            ),
         },
         {
             "dbz": "20–40",
             "description": "Light precipitation",
-            "gradient": "180deg, #3FD657 0%, #3ED624 9.47%, #24890E 36.39%, #176108 61.25%, #819F06 73.2%, #FBE000 85.5%, #F4CB17 100%",
+            "gradient": (
+                "180deg, #3FD657 0%, #3ED624 9.47%, #24890E 36.39%, #176108 61.25%, #819F06 73.2%, #FBE000 85.5%,"
+                " #F4CB17 100%"
+            ),
         },
         {
             "dbz": "40–50",
@@ -190,7 +192,10 @@ def radar(**kwargs):
         {
             "dbz": "50–65",
             "description": "Heavy precipitation or some hail",
-            "gradient": "180deg, #D10808 0%, #A20F10 16.84%, #B00301 48.32%, #FEFBFF 49.94%, #EDA7FD 71.83%, #E474FC 83.75%, #F174FD 100%);",
+            "gradient": (
+                "180deg, #D10808 0%, #A20F10 16.84%, #B00301 48.32%, #FEFBFF 49.94%, #EDA7FD 71.83%, #E474FC 83.75%,"
+                " #F174FD 100%);"
+            ),
         },
         {
             "dbz": ">65",
@@ -211,9 +216,7 @@ def quick_forecast_link_item(**kwargs):
     day = kwargs["day"]
     result["day"] = day
     result["day_id"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
-    result["temps"] = [
-        period["data"]["temperature"]["degF"] for period in day["periods"]
-    ]
+    result["temps"] = [period["data"]["temperature"]["degF"] for period in day["periods"]]
     result["low"] = min(result["temps"])
     result["high"] = max(result["temps"])
     result["numPeriods"] = len(day["periods"])
@@ -222,7 +225,7 @@ def quick_forecast_link_item(**kwargs):
     not_daytime = not day["periods"][0]["isDaytime"]
     result["isNightPeriod"] = is_first_period and not_overnight and not_daytime
     result["pop"] = day["maxPop"]
-    if result["pop"] == None:
+    if result["pop"] is None:
         result["pop"] = 0
 
     # If there are no alerts, we need to specify
@@ -265,36 +268,16 @@ def hourly_charts(**kwargs):
     if not result["itemId"]:
         result["itemId"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
     result["times"] = [hour["hour"] for hour in hours if "hour" in hour]
-    result["temps"] = [
-        hour["temperature"]["degF"] for hour in hours if "temperature" in hour
-    ]
-    result["feelsLike"] = [
-        hour["apparentTemperature"]["degF"]
-        for hour in hours
-        if "apparentTemperature" in hour
-    ]
+    result["temps"] = [hour["temperature"]["degF"] for hour in hours if "temperature" in hour]
+    result["feelsLike"] = [hour["apparentTemperature"]["degF"] for hour in hours if "apparentTemperature" in hour]
     result["pops"] = [
-        hour["probabilityOfPrecipitation"]["percent"]
-        for hour in hours
-        if "probabilityOfPrecipitation" in hour
+        hour["probabilityOfPrecipitation"]["percent"] for hour in hours if "probabilityOfPrecipitation" in hour
     ]
-    result["dewpoints"] = [
-        hour["dewpoint"]["degF"] for hour in hours if "dewpoint" in hour
-    ]
-    result["relativeHumidity"] = [
-        hour["relativeHumidity"]["percent"]
-        for hour in hours
-        if "relativeHumidity" in hour
-    ]
-    result["windSpeeds"] = [
-        hour["windSpeed"]["mph"] for hour in hours if "windSpeed" in hour
-    ]
-    result["windGusts"] = [
-        hour["windGust"]["mph"] for hour in hours if "windGust" in hour
-    ]
-    result["windDirections"] = [
-        hour["windDirection"] for hour in hours if "windDirection" in hour
-    ]
+    result["dewpoints"] = [hour["dewpoint"]["degF"] for hour in hours if "dewpoint" in hour]
+    result["relativeHumidity"] = [hour["relativeHumidity"]["percent"] for hour in hours if "relativeHumidity" in hour]
+    result["windSpeeds"] = [hour["windSpeed"]["mph"] for hour in hours if "windSpeed" in hour]
+    result["windGusts"] = [hour["windGust"]["mph"] for hour in hours if "windGust" in hour]
+    result["windDirections"] = [hour["windDirection"] for hour in hours if "windDirection" in hour]
 
     return result
 
@@ -306,19 +289,15 @@ def daily_forecast_quick_toggle(**kwargs):
     day = kwargs["day"]
     result["day"] = day
     result["dayId"] = day["periods"][0]["monthAndDay"].lower().replace(" ", "-")
-    result["temps"] = [
-        period["data"]["temperature"]["degF"] for period in day["periods"]
-    ]
+    result["temps"] = [period["data"]["temperature"]["degF"] for period in day["periods"]]
     result["low"] = min(result["temps"])
     result["high"] = max(result["temps"])
     result["numPeriods"] = len(day["periods"])
     is_not_overnight = not day["periods"][0]["isOvernight"]
     is_not_daytime = not day["periods"][0]["isDaytime"]
-    result["isNightPeriod"] = (
-        result["numPeriods"] == 1 and is_not_overnight and is_not_daytime
-    )
+    result["isNightPeriod"] = result["numPeriods"] == 1 and is_not_overnight and is_not_daytime
     result["pop"] = day["maxPop"]
-    if result["pop"] == None:
+    if result["pop"] is None:
         result["pop"] = 0
 
     result["hasAlertIcon"] = False
@@ -335,9 +314,7 @@ def precip_table(**kwargs):
     qpf = kwargs["qpf"]
     result["qpf"] = qpf
     result["as_table"] = kwargs.get("as_table", True)
-    result["times"] = [
-        f"{period['startHour']}-{period['endHour']}" for period in qpf["periods"]
-    ]
+    result["times"] = [f"{period['startHour']}-{period['endHour']}" for period in qpf["periods"]]
     result["liquid"] = [period["liquid"]["in"] for period in qpf["periods"]]
     result["snow"] = []
     result["ice"] = []
