@@ -28,3 +28,6 @@ pause:
 
 build-css: # Build CSS
 	docker compose run --rm uswds npx gulp compile
+
+python-lint:
+	docker compose exec web python -m black .
