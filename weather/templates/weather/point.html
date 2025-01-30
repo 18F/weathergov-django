@@ -41,105 +41,105 @@
       </div>
     {% else %}
       <wx-tabbed-nav class="display-block position-relative">
-        <div id="tablist-label" class="usa-sr-only">{{ "forecast.labels.weather-info.01" | t }}</div>
-        <div class="position-sticky top-0 z-500 bg-white border-base-light border-top-0 border-bottom-2px margin-y-0">
-          <div class="grid-container padding-x-0">
-            <div role="tablist"
-                 class="tab-buttons display-flex flex-row top-4 grid-col-12"
-                 aria-labelledby="tablist-label">
-              {% if point.alerts.items|length > 0 %}
-                <button role="tab"
-                        id="alerts-tab-button"
-                        class="tab-button"
-                        data-tab-name="alerts"
-                        aria-controls="alerts">{{ "forecast.labels.alerts.01" | t }}</button>
-              {% endif %}
+      <div id="tablist-label" class="usa-sr-only">{{ "forecast.labels.weather-info.01" | t }}</div>
+      <div class="position-sticky top-0 z-500 bg-white border-base-light border-top-0 border-bottom-2px margin-y-0">
+        <div class="grid-container padding-x-0">
+          <div role="tablist"
+               class="tab-buttons display-flex flex-row top-4 grid-col-12"
+               aria-labelledby="tablist-label">
+            {% if point.alerts.items|length > 0 %}
               <button role="tab"
-                      id="current-conditions-tab-button"
+                      id="alerts-tab-button"
                       class="tab-button"
-                      data-tab-name="today"
-                      aria-controls="today">{{ "daily-forecast.labels.today.01" | t }}</button>
-              <button role="tab"
-                      id="daily-tab-button"
-                      class="tab-button"
-                      data-tab-name="daily"
-                      aria-controls="daily">{{ "forecast.labels.seven-days.01" | t }}</button>
-            </div>
-          </div>
-        </div>
-        <div class="bg-base-lightest padding-top-3 padding-bottom-8">
-          {% if point.alerts.items|length > 0 %}
-            <div class="wx-tab-container wx-focus-offset-205"
-                 id="alerts"
-                 role="tabpanel"
-                 aria-labelledby="alerts-tab-button"
-                 tabindex="0">{% include 'weather/partials/alerts.html' with alerts=point.alerts.items %}</div>
-          {% endif %}
-          <div class="wx-tab-container wx-focus-offset-205"
-               id="today"
-               role="tabpanel"
-               aria-labelledby="current-conditions-tab-button"
-               tabindex="0">
-            <div class="grid-container tablet:padding-x-2 desktop:padding-x-4 padding-x-0">
-              <div class="grid-row desktop__wx-grid-gap-lg">
-                <div class="desktop:grid-col-4 display-flex flex-column">
-                  {% include "weather/partials/observations.html" with obs=point.observed %}
-                </div>
-                <div class="desktop:grid-col-8 display-flex flex-column">
-                  {% if point.forecast.error or point.forecast.days|length == 0 %}
-                    {% include 'weather/partials/uswds-alert.html' with level="error" body="forecast.errors.loading.01"|t %}
-                  {% else %}
-                    {% include 'weather/partials/today-summary-forecast.html' with forecast=point.forecast %}
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-            <!-- Weather Story Image here -->
-            {#  set weather_story =  drupal_block("weathergov_weather_story_image", { wfo: point.grid.wfo }) #}
-            {% if  weather_story.content|length > 0 %}
-              {{ weather_story }}
-            {% else %}
-              <div class="grid-container margin-top-4 padding-x-0 tablet:padding-x-2 desktop:padding-x-4">
-                <div class="grid-row bg-accent-cool-lightest border-1px border-base-light padding-x-2">
-                  <div class="display-flex flex-align-center padding-y-105">
-                    <svg width="24"
-                         height="24"
-                         viewBox="0 0 24 24"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg"
-                         aria-hidden="true">
-                      <rect width="24" height="24" fill="transparent" />
-                      <path d="M6 5H18V6H6V5Z" fill="#0085CA" />
-                      <path d="M6 10H18V11H6V10Z" fill="#0085CA" />
-                      <path d="M18 15H6V16H18V15Z" fill="#0085CA" />
-                      <path d="M6 12H16V13H6V12Z" fill="#0085CA" />
-                      <path d="M16 17H6V18H16V17Z" fill="#0085CA" />
-                      <path d="M6 7H16V8H6V7Z" fill="#0085CA" />
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M4 2H20V22H4V2ZM5 3H19V21H5V3Z" fill="#0085CA" />
-                    </svg>
-                    <a class="usa-link margin-left-1"
-                       href="/afd/{{ point.grid.wfo | normalize_wfo }}">{{ "forecast.link.area-forecast-discussion.01" | t }}</a>
-                  </div>
-                </div>
-              </div>
+                      data-tab-name="alerts"
+                      aria-controls="alerts">{{ "forecast.labels.alerts.01" | t }}</button>
             {% endif %}
-            <div class="grid-container tablet:padding-x-2 desktop:padding-x-4 padding-x-0">
-              <div class="grid-row desktop__wx-grid-gap-lg">
-                <div class="desktop:grid-col-6 wx-radar-wrapper">{% radar place=point.place.fullName point=point.point %}</div>
-                <div class="desktop:grid-col-6 wx-satellite-wrapper">
-                  {% include "weather/partials/satellite.html" with point=point %}
-                </div>
+            <button role="tab"
+                    id="current-conditions-tab-button"
+                    class="tab-button"
+                    data-tab-name="today"
+                    aria-controls="today">{{ "daily-forecast.labels.today.01" | t }}</button>
+            <button role="tab"
+                    id="daily-tab-button"
+                    class="tab-button"
+                    data-tab-name="daily"
+                    aria-controls="daily">{{ "forecast.labels.seven-days.01" | t }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="bg-base-lightest padding-top-3 padding-bottom-8">
+        {% if point.alerts.items|length > 0 %}
+          <div class="wx-tab-container wx-focus-offset-205"
+               id="alerts"
+               role="tabpanel"
+               aria-labelledby="alerts-tab-button"
+               tabindex="0">{% include 'weather/partials/alerts.html' with alerts=point.alerts.items %}</div>
+        {% endif %}
+        <div class="wx-tab-container wx-focus-offset-205"
+             id="today"
+             role="tabpanel"
+             aria-labelledby="current-conditions-tab-button"
+             tabindex="0">
+          <div class="grid-container tablet:padding-x-2 desktop:padding-x-4 padding-x-0">
+            <div class="grid-row desktop__wx-grid-gap-lg">
+              <div class="desktop:grid-col-4 display-flex flex-column">
+                {% include "weather/partials/observations.html" with obs=point.observed %}
+              </div>
+              <div class="desktop:grid-col-8 display-flex flex-column">
+                {% if point.forecast.error or point.forecast.days|length == 0 %}
+                  {% include 'weather/partials/uswds-alert.html' with level="error" body="forecast.errors.loading.01"|t %}
+                {% else %}
+                  {% include 'weather/partials/today-summary-forecast.html' with forecast=point.forecast %}
+                {% endif %}
               </div>
             </div>
           </div>
-          <wx-daily-forecast class="wx-tab-container wx-focus-offset-205" id="daily" role="tabpanel" aria-labelledby="daily-tab-button" tabindex="0">
-            <h2 class="usa-sr-only">{% trans "forecast.heading.daily-forecast.01" %}</h2>
-            {#% include '@new_weather_theme/point/forecast.html.twig' with { forecast: point.forecast } %#}
-            {% include "weather/partials/forecast.html" with forecast=point.forecast %}
-            {#{ drupal_block("weathergov_wfo_promo", { wfo: point.grid.wfo }) }#}
-          </wx-daily-forecast>
-      </wx-tabbed-nav>
-    {% endif %}
+          <!-- Weather Story Image here -->
+          {#  set weather_story =  drupal_block("weathergov_weather_story_image", { wfo: point.grid.wfo }) #}
+          {% if  weather_story.content|length > 0 %}
+            {{ weather_story }}
+          {% else %}
+            <div class="grid-container margin-top-4 padding-x-0 tablet:padding-x-2 desktop:padding-x-4">
+              <div class="grid-row bg-accent-cool-lightest border-1px border-base-light padding-x-2">
+                <div class="display-flex flex-align-center padding-y-105">
+                  <svg width="24"
+                       height="24"
+                       viewBox="0 0 24 24"
+                       fill="none"
+                       xmlns="http://www.w3.org/2000/svg"
+                       aria-hidden="true">
+                    <rect width="24" height="24" fill="transparent" />
+                    <path d="M6 5H18V6H6V5Z" fill="#0085CA" />
+                    <path d="M6 10H18V11H6V10Z" fill="#0085CA" />
+                    <path d="M18 15H6V16H18V15Z" fill="#0085CA" />
+                    <path d="M6 12H16V13H6V12Z" fill="#0085CA" />
+                    <path d="M16 17H6V18H16V17Z" fill="#0085CA" />
+                    <path d="M6 7H16V8H6V7Z" fill="#0085CA" />
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4 2H20V22H4V2ZM5 3H19V21H5V3Z" fill="#0085CA" />
+                  </svg>
+                  <a class="usa-link margin-left-1"
+                     href="/afd/{{ point.grid.wfo | normalize_wfo }}">{{ "forecast.link.area-forecast-discussion.01" | t }}</a>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <div class="grid-container tablet:padding-x-2 desktop:padding-x-4 padding-x-0">
+            <div class="grid-row desktop__wx-grid-gap-lg">
+              <div class="desktop:grid-col-6 wx-radar-wrapper">{% radar place=point.place.fullName point=point.point %}</div>
+              <div class="desktop:grid-col-6 wx-satellite-wrapper">
+                {% include "weather/partials/satellite.html" with point=point %}
+              </div>
+            </div>
+          </div>
         </div>
+        <wx-daily-forecast class="wx-tab-container wx-focus-offset-205" id="daily" role="tabpanel" aria-labelledby="daily-tab-button" tabindex="0">
+        <h2 class="usa-sr-only">{% trans "forecast.heading.daily-forecast.01" %}</h2>
+        {#% include '@new_weather_theme/point/forecast.html.twig' with { forecast: point.forecast } %#}
+        {% include "weather/partials/forecast.html" with forecast=point.forecast %}
+        {#{ drupal_block("weathergov_wfo_promo", { wfo: point.grid.wfo }) }#}
+        </wx-daily-forecast>
+        </wx-tabbed-nav>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}

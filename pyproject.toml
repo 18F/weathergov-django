@@ -4,6 +4,7 @@ unstable=true
 
 [tool.djlint]
 ignore="H030,H031,H006,H023,H020,H021"
+indent=2
 
 
 [tool.mypy]
