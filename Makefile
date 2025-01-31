@@ -28,3 +28,15 @@ pause:
 
 build-css: # Build CSS
 	docker compose run --rm uswds npx gulp compile
+
+python-lint:
+	docker compose exec web python -m black .
+	docker compose exec web python -m flake8 .
+
+template-lint:
+	docker compose exec web djlint weather/templates/ --extension=html
+
+template-format:
+	docker compose exec web djlint weather/templates/ --reformat --extension=html
+
+lint: python-lint template-format template-lint
