@@ -27,7 +27,7 @@ pause:
 	sleep 15
 
 build-css: # Build CSS
-	docker compose run --rm uswds npx gulp compile
+	docker compose run --rm uswds bun run gulp compile
 
 python-lint:
 	docker compose exec web python -m black .

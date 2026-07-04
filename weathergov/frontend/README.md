@@ -24,6 +24,6 @@ Design System; the `paths.dist` settings are specific to your project.
 ADD COMPILE FUNCTIONS
 -----------------
 We use the `compile`, `init`, and `watch` functions, defined as exports in
-**gulpfile.js**. Run `npx gulp [function]` from the theme root to use any of
+**gulpfile.js**. Run `bunx gulp [function]` from the theme root to use any of
 these functions. For other available functions, visit
 [USWDS compile functions](https://designsystem.digital.gov/documentation/getting-started/developers/phase-two-compile/#step-6-export-compile-functions).
